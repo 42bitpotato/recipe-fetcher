@@ -14,7 +14,7 @@ def main():
     html_data = get_html(url)
 
     with open(dest_file_name, "w") as html_file:
-        html_file.write(html.prettify())
+        html_file.write(html_data.prettify())
 
     print(html_file)
 
