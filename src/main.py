@@ -1,6 +1,6 @@
 import os
 import shutil
-from download_content import *
+from extract_content import *
 
 def main():
 
