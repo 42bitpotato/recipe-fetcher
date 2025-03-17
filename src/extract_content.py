@@ -8,14 +8,8 @@ def get_html(url):
 
 def extract_title(html):
     title = str(html.title)
-    split_title = []
-    for line in title.splitlines():
-        if line.endswith("title>"):
-            continue
-        else:
-            split_title.append(line)
-    title = "\n".join(split_title)
     return title
+
 
 
 

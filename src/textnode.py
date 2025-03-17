@@ -1,5 +1,16 @@
+from enum import Enum
 
-        
+class SectionType(Enum):
+    TITLE = "title"
+    DESCR = "description"
+    IMAGE = "image"
+    INGRE = "ingredients"
+    INSTR = "instructions"
+
+class ContentType(Enum):
+    TEXT = "text"
+    
+
 # Parent
 class SectionNode():
     def __init__(self, section, content_nodes):
