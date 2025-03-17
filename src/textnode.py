@@ -9,16 +9,20 @@ class SectionType(Enum):
 
 class ContentType(Enum):
     TEXT = "text"
-    
+    UOLIST = "unordered list"
+    OLIST = "ordered list"
 
-# Parent
 class SectionNode():
     def __init__(self, section, content_nodes):
         self.section = section
         self.content = content_nodes
 
-# Child
-class ContentNode():
+class ContentParentNode():
+    def __init__(self, type, children):
+        self.type = type
+        self.children = children
+
+class ContentChildNode():
     def __init__(self, type, value):
         self.type = type
         self.value = value
