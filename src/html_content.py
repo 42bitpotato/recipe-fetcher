@@ -3,9 +3,9 @@ import re
 from bs4 import BeautifulSoup
 
 def get_html(url):
-        html = requests.get(url)
-        soup = BeautifulSoup(html.text, "html.parser")
-        return HTMLFile(soup)
+    html = requests.get(url)
+    soup = BeautifulSoup(html.text, "html.parser")
+    return HTMLFile(soup)
 
 class HTMLContent():
      def __init__(self, type, html):
@@ -22,6 +22,9 @@ class HTMLFile():
         self.extract_ingredients()
         self.extract_instructions()
         self.extract_image()
+
+    def __repr__(self):
+        return f"HTMLFile({self._html}, {self.content})"
 
     def extract_title(self):
         title = self._html.find_all("h1", class_=re.compile("title"))
