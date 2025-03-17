@@ -1,6 +1,6 @@
 import os
 import shutil
-from extract_html_content import *
+from html_content import *
 
 def main():
 
