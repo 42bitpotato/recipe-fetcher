@@ -30,7 +30,7 @@ class HTMLFile():
         return f"HTMLFile(HTML, {self.content})"
 
     def extract_title(self):
-        title = self._html.find_all("h1", class_=re.compile("title"))
+        title = self._html.find("h1", class_=re.compile("title"))
         self.content.append(HTMLContent("title", title))
 
     def extract_description(self):

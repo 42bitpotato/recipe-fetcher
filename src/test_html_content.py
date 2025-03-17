@@ -10,8 +10,6 @@ soup = BeautifulSoup(file, "html.parser")
 
 class TestTextNode(unittest.TestCase):
     def test_HTMLFile(self):
-        html_file = get_html("https://www.koket.se/allt-pa-en-plat")
-
-        print(html_file)
+        html_file = HTMLFile(soup)
 
         self.assertTrue(len(html_file.content) > 0)
