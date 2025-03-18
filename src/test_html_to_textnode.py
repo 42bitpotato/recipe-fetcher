@@ -3,6 +3,7 @@ import os
 from bs4 import BeautifulSoup
 from html_content import *
 from html_to_textnode import title_to_textnode
+from textnode import *
 
 html_path = os.path.join("test_env", "html_file.html")
 file = open(html_path, "r")
@@ -18,4 +19,4 @@ class TestTextNode(unittest.TestCase):
 
         title = title_to_textnode(html_title)
 
-        self.assertEqual(title, "Lax med sandefjordsås och citronfänkål")
+        self.assertEqual(title, ContentChildNode("Lax med sandefjordsås och citronfänkål"))

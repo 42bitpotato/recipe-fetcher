@@ -22,6 +22,23 @@ class ContentParentNode():
         self.type = type
         self.children = children
 
+    def __repr__(self):
+        return f"ContentParentNode({self.type}, {self.children})"
+    
+    def __eq__(self, other):
+        if isinstance(other, ContentParentNode):
+            return (self.type == other.type,
+                    self.children == other.children)
+        return False
+
 class ContentChildNode():
     def __init__(self, value):
         self.value = value
+
+    def __repr__(self):
+        return f"ContentChildNode({self.value})"
+    
+    def __eq__(self, other):
+        if isinstance(other, ContentChildNode):
+            return self.value == other.value
+        return False
