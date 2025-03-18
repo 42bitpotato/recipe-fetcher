@@ -12,4 +12,8 @@ def html_to_textnode(html_file):
 def title_to_textnode(html_title):
     string = str(html_title.string)
     return ContentChildNode(string.strip())
+
+def description_to_textnode(html_description):
+    string = str(html_description.p.string)
+    return ContentChildNode(string.strip())
     

@@ -34,7 +34,7 @@ class HTMLFile():
         self.content.append(HTMLContent("title", title))
 
     def extract_description(self):
-        description = self._html.find_all("div", class_=re.compile("description"))
+        description = self._html.find("div", class_=re.compile("description"))
         self.content.append(HTMLContent("description", description))
 
     def extract_ingredients(self):
