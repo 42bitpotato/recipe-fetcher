@@ -23,6 +23,5 @@ class ContentParentNode():
         self.children = children
 
 class ContentChildNode():
-    def __init__(self, type, value):
-        self.type = type
+    def __init__(self, value):
         self.value = value

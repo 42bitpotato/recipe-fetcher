@@ -17,6 +17,5 @@ class TestTextNode(unittest.TestCase):
         html_title = html_title_node.html
 
         title = title_to_textnode(html_title)
-        print(title)
 
         self.assertEqual(title, "Lax med sandefjordsås och citronfänkål")
