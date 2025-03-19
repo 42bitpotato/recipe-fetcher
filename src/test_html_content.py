@@ -8,8 +8,11 @@ file = open(html_path, "r")
 
 soup = BeautifulSoup(file, "html.parser")
 
+url = "https://www.koket.se/lax-med-sandefjordsas-och-citronfankal"
+
 class TestTextNode(unittest.TestCase):
     def test_HTMLFile(self):
-        html_file = HTMLFile(soup)
+        html_file_url = get_html(url)
 
-        self.assertTrue(len(html_file.content) > 0)
+        self.assertTrue(len(html_file_url.content) == 5)
+        # self.assertEqual(html_file_url, )
