@@ -8,12 +8,12 @@ def html_to_textnode(html_file):
     if len(html_file.content) == 0:
         raise ValueError(f"Missing content: {html_file.content}")
     
-def title_to_textnode(html_title):
-    string = str(html_title.string)
+def title_to_textnode(html):
+    string = str(html.string)
     return ContentChildNode(string.strip())
 
-def description_to_textnode(html_description):
-    string = str(html_description.p.string)
+def description_to_textnode(html):
+    string = str(html.p.string)
     return ContentChildNode(string.strip())
 
 def ingredients_to_textnode(html):
@@ -26,3 +26,6 @@ def ingredients_to_textnode(html):
             else:
                 list_of_ingredients.append(ContentChildNode(line.strip()))
     return list_of_ingredients
+
+def instructions_to_textnode(html):
+    pass
