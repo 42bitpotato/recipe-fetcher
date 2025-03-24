@@ -37,3 +37,13 @@ def instructions_to_textnode(html):
             else:
                 list_of_instructions.append(ContentChildNode(line.strip()))
     return list_of_instructions
+
+def image_to_textnode(html):
+    split_html = str(html.get("srcset")).split(",")
+    for image_url in split_html:
+        if image_url.endswith("816w"):
+            for url in image_url.split():
+                if url.startswith("http"):
+                    return ContentChildNode(url)
+                continue
+    raise ValueError(f"Missing url: {html}")

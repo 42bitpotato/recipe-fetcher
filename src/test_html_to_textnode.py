@@ -2,7 +2,7 @@ import unittest
 import os
 from bs4 import BeautifulSoup
 from html_content import *
-from html_to_textnode import title_to_textnode, description_to_textnode, ingredients_to_textnode
+from html_to_textnode import title_to_textnode, description_to_textnode, ingredients_to_textnode, image_to_textnode
 from textnode import *
 
 html_path = os.path.join("test_env", "html_file.html")
@@ -72,3 +72,20 @@ class TestTextNode(unittest.TestCase):
                                         ContentChildNode("Koka upp grädde i en liten kastrull. Vispa ner crème fraiche och låt få ett uppkok. Ta av från värmen. Vispa ner lite smör i taget, smaka av med citron, salt och peppar. Tillsätt hälften av rommen samt hackad gräslök, rör om och smaka av med lite citron."), 
                                         ContentChildNode("Servera den bakade fisken med sandefjordsås, citronfänkål, gurka och potatis.")]
                                         )
+        
+    def test_image_to_textnode(self):
+        html_image_node = html_file.content[4]
+        html_image = html_image_node.html
+
+        no_url_txt = '<source sizes="(min-width: 1025px) 50vw, 100vw" srcset="https://img.koket.se/wide-mini/lax-med-sandefjordsas-och-citronfankal.png.jpg 88w, https://img.koket.se/wide-small/lax-med-sandefjordsas-och-citronfankal.png.jpg 192w, https://img.koket.se/wide-medium/lax-med-sandefjordsas-och-citronfankal.png.jpg 400w, https://img.koket.se/wide-large/lax-med-sandefjordsas-och-citronfankal.png.jpg 608w, https://img.koket.se/wide-giant/lax-med-sandefjordsas-och-citronfankal.png.jpg 816w, https://img.koket.se/wide-mega/lax-med-sandefjordsas-och-citronfankal.png.jpg 1224w" type="image/jpeg"/>'
+        no_url = BeautifulSoup(no_url_txt, "html.parser")
+
+        image = image_to_textnode(html_image)
+
+        print("---PRINT---")
+        print(no_url)
+
+        self.assertEqual(image, ContentChildNode("https://img.koket.se/wide-giant/lax-med-sandefjordsas-och-citronfankal.png.jpg"))
+
+        with self.assertRaises(ValueError):
+            image_to_textnode(no_url)
