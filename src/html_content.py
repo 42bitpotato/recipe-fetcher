@@ -64,6 +64,6 @@ class HTMLFile():
         self.content.append(HTMLContent("instructions", instructions))
 
     def extract_image(self):
-        image = self._html.find_all("source", srcset=True, type="image/jpeg")
-        self.content.append(HTMLContent("image", image))
+        images = self._html.find_all("source", srcset=True, type="image/jpeg")
+        self.content.append(HTMLContent("image", images))
     
