@@ -1,6 +1,8 @@
 import os
 import shutil
 from html_content import *
+from bs4 import BeautifulSoup
+
 
 def main():
 
@@ -12,9 +14,10 @@ def main():
 
     dest_file_name = os.path.join("test_env", "html_file.html")
     html_data = get_html(url)
+    html_raw = html_data._html
 
     with open(dest_file_name, "w") as html_file:
-        html_file.write(html_data.prettify())
+        html_file.write(html_raw.prettify())
 
     print(html_file)
 
