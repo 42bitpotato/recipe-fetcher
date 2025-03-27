@@ -2,7 +2,7 @@ import unittest
 import os
 from bs4 import BeautifulSoup
 from html_content import *
-from html_to_textnode import title_to_textnode, description_to_textnode, ingredients_to_textnode, image_to_textnode
+from html_to_textnode import title_to_textnode, description_to_textnode, ingredients_to_textnode, instructions_to_textnode, image_to_textnode
 from textnode import *
 
 html_path = os.path.join("test_env", "html_file.html")
@@ -42,6 +42,9 @@ class TestTextNode(unittest.TestCase):
         html_ingredients = html_ingredients_node.html
 
         ingredients = ingredients_to_textnode(html_ingredients)
+
+        print("---PRINT---")
+        print(ingredients)
         
         self.assertEqual(ingredients, [ContentChildNode('700 g röding, i portionsbitar (eller laxfilé)'), 
                                        ContentChildNode('2 tsk olivolja'), 
@@ -62,7 +65,7 @@ class TestTextNode(unittest.TestCase):
         html_instructions_node = html_file.content[3]
         html_instructions = html_instructions_node.html
 
-        instructions = ingredients_to_textnode(html_instructions)
+        instructions = instructions_to_textnode(html_instructions)
 
         self.assertEqual(instructions, [ContentChildNode("Sätt ugnen på 150 grader varmluft."), 
                                         ContentChildNode("Skiva fänkål så tunt du kan, gärna med mandolin. Riv över zest från citronen och pressa saften över, spara lite saft till såsen. På med finhackad dill och rör om. Låt stå."), 
@@ -81,9 +84,6 @@ class TestTextNode(unittest.TestCase):
         no_url = BeautifulSoup(no_url_txt, "html.parser")
 
         image = image_to_textnode(html_image)
-
-        print("---PRINT---")
-        print(no_url)
 
         self.assertEqual(image, ContentChildNode("https://img.koket.se/wide-giant/lax-med-sandefjordsas-och-citronfankal.png.jpg"))
 
