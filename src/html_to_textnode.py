@@ -19,7 +19,9 @@ def description_to_textnode(html):
 def ingredients_to_textnode(html):
     list_of_ingredients = []
     for ingredient in html:
-        ingredient_txt = str(ingredient.string)
+        ingredient_txt = ingredient.get_text(strip=True) # str(ingredient.string)
+        if not ingredient_txt:  # Catches both None and ""
+            raise ValueError(f"Failed to extract text from HTML: {repr(ingredient)}")
         for line in ingredient_txt.splitlines():
             if line.isspace() or line == "":
                 continue
@@ -30,7 +32,9 @@ def ingredients_to_textnode(html):
 def instructions_to_textnode(html):
     list_of_instructions = []
     for instr_step in html:
-        instr_step_txt = str(instr_step.string)
+        instr_step_txt = instr_step.get_text(strip=True) # str(instr_step.string)
+        if not instr_step_txt:  # Catches both None and ""
+            raise ValueError(f"Failed to extract text from HTML: {repr(instr_step)}")
         for line in instr_step_txt.splitlines():
             if line.isspace() or line == "":
                 continue
