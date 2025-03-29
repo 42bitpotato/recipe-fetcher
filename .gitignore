@@ -1,8 +1,8 @@
 # Custom
 test_env/
 test_environment.py
-test_file.html
 save_for_later.py
+test_file.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
