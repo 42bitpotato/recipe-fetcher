@@ -1,5 +1,6 @@
 import requests
 import re
+from textnode import SectionType
 from bs4 import BeautifulSoup
 
 def get_html(url):
@@ -49,21 +50,21 @@ class HTMLFile():
 
     def extract_title(self):
         title = self._html.find("h1", class_=re.compile("title"))
-        self.content.append(HTMLContent("title", title))
+        self.content.append(HTMLContent(SectionType.TITLE, title))
 
     def extract_description(self):
         description = self._html.find("div", class_=re.compile("description"))
-        self.content.append(HTMLContent("description", description))
+        self.content.append(HTMLContent(SectionType.DESCR, description))
 
     def extract_ingredients(self):
         ingredients = self._html.find_all("span", class_=re.compile("ingredient"))
-        self.content.append(HTMLContent("ingredients", ingredients))
+        self.content.append(HTMLContent(SectionType.INGRE, ingredients))
 
     def extract_instructions(self):
         instructions = self._html.find_all("span", class_=re.compile("instruction"))
-        self.content.append(HTMLContent("instructions", instructions))
+        self.content.append(HTMLContent(SectionType.INSTR, instructions))
 
     def extract_image(self):
         images = self._html.find("source", srcset=True, type="image/jpeg")
-        self.content.append(HTMLContent("image", images))
+        self.content.append(HTMLContent(SectionType.IMAGE, images))
     

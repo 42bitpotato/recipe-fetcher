@@ -7,6 +7,9 @@ from bs4 import BeautifulSoup
 def html_to_textnode(html_file):
     if len(html_file.content) == 0:
         raise ValueError(f"Missing content: {html_file.content}")
+    for content in html_file.content:
+        if not isinstance(content.type, SectionType):
+            raise ValueError(f"Missing SectionType Enum: {content}")
     
 def title_to_textnode(html):
     string = str(html.string)
@@ -20,8 +23,8 @@ def ingredients_to_textnode(html):
     list_of_ingredients = []
     for ingredient in html:
         ingredient_txt = ingredient.get_text(strip=True) # str(ingredient.string)
-        if not ingredient_txt:  # Catches both None and ""
-            raise ValueError(f"Failed to extract text from HTML: {repr(ingredient)}")
+        # if not ingredient_txt:  # Catches both None and ""
+        #     raise ValueError(f"Failed to extract text from HTML: {repr(ingredient)}")
         for line in ingredient_txt.splitlines():
             if line.isspace() or line == "":
                 continue
@@ -33,8 +36,8 @@ def instructions_to_textnode(html):
     list_of_instructions = []
     for instr_step in html:
         instr_step_txt = instr_step.get_text(strip=True) # str(instr_step.string)
-        if not instr_step_txt:  # Catches both None and ""
-            raise ValueError(f"Failed to extract text from HTML: {repr(instr_step)}")
+        # if not instr_step_txt:  # Catches both None and ""
+        #     raise ValueError(f"Failed to extract text from HTML: {repr(instr_step)}")
         for line in instr_step_txt.splitlines():
             if line.isspace() or line == "":
                 continue
