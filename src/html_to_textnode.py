@@ -22,7 +22,7 @@ def html_to_textnode(html_file: "HTMLFile"):
 
                 section_node.content.append(ContentParentNode(ContentType.TEXT, childnode))
                 section_nodes.append(section_node)
-                break
+                
             case SectionType.DESCR:
                 section_node = SectionNode(SectionType.DESCR)
 
@@ -30,7 +30,7 @@ def html_to_textnode(html_file: "HTMLFile"):
 
                 section_node.content.append(ContentParentNode(ContentType.TEXT, childnode))
                 section_nodes.append(section_node)
-                break
+                
             case SectionType.INGRE:
                 section_node = SectionNode(SectionType.INGRE)
 
@@ -38,7 +38,7 @@ def html_to_textnode(html_file: "HTMLFile"):
 
                 section_node.content.append(ContentParentNode(ContentType.UOLIST, childnode))
                 section_nodes.append(section_node)
-                break
+                
             case SectionType.INSTR:
                 section_node = SectionNode(SectionType.INSTR)
 
@@ -46,7 +46,7 @@ def html_to_textnode(html_file: "HTMLFile"):
 
                 section_node.content.append(ContentParentNode(ContentType.OLIST, childnode))
                 section_nodes.append(section_node)
-                break
+                
             case SectionType.IMAGE:
                 section_node = SectionNode(SectionType.IMAGE)
 
@@ -54,8 +54,8 @@ def html_to_textnode(html_file: "HTMLFile"):
 
                 section_node.content.append(ContentParentNode(ContentType.IMAGE, childnode))
                 section_nodes.append(section_node)
-                break
-            
+                
+
     return section_nodes
 
 def title_to_textnode(html):
