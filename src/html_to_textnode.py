@@ -22,27 +22,39 @@ def description_to_textnode(html):
 def ingredients_to_textnode(html):
     list_of_ingredients = []
     for ingredient in html:
-        ingredient_txt = ingredient.get_text(strip=True) # str(ingredient.string)
-        # if not ingredient_txt:  # Catches both None and ""
-        #     raise ValueError(f"Failed to extract text from HTML: {repr(ingredient)}")
+        ingredient_txt = ingredient.get_text(strip=True)
+
+        if not ingredient_txt:  # Catches both None and "", skip empty elements
+            continue
+
         for line in ingredient_txt.splitlines():
             if line.isspace() or line == "":
                 continue
             else:
                 list_of_ingredients.append(ContentChildNode(line.strip()))
+
+    if len(list_of_ingredients) == 0: # Raise an error if no valid content was extracted
+        raise ValueError(f"Failed to extract text from HTML. list_of_ingredients: {list_of_ingredients}")
+
     return list_of_ingredients
 
 def instructions_to_textnode(html):
     list_of_instructions = []
     for instr_step in html:
-        instr_step_txt = instr_step.get_text(strip=True) # str(instr_step.string)
-        # if not instr_step_txt:  # Catches both None and ""
-        #     raise ValueError(f"Failed to extract text from HTML: {repr(instr_step)}")
+        instr_step_txt = instr_step.get_text(strip=True)
+        
+        if not instr_step_txt:  # Catches both None and "", skip empty elements
+            continue
+        
         for line in instr_step_txt.splitlines():
             if line.isspace() or line == "":
                 continue
             else:
                 list_of_instructions.append(ContentChildNode(line.strip()))
+
+    if len(list_of_instructions) == 0: # Raise an error if no valid content was extracted
+        raise ValueError(f"Failed to extract text from HTML. list_of_instructions: {list_of_instructions}")
+    
     return list_of_instructions
 
 def image_to_textnode(html):
