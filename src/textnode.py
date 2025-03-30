@@ -13,7 +13,7 @@ class ContentType(Enum):
     OLIST = "ordered list"
 
 class SectionNode():
-    def __init__(self, section_type, content_nodes):
+    def __init__(self, section_type, content_nodes=[]):
         self.section_type = section_type
         self.content = content_nodes
 
