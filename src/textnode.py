@@ -11,6 +11,7 @@ class ContentType(Enum):
     TEXT = "text"
     UOLIST = "unordered list"
     OLIST = "ordered list"
+    IMAGE = "image"
 
 class SectionNode():
     def __init__(self, section_type, content_nodes=[]):
