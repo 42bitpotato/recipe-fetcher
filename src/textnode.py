@@ -13,10 +13,33 @@ class ContentType(Enum):
     OLIST = "ordered list"
     IMAGE = "image"
 
+class RecipeHead():
+    def __init__(self, title, sections=[]):
+        self.title = title
+        self.sections = sections
+
+    def __repr__(self):
+        return f"RecipeHead({self.title}, {self.sections})"
+    
+    def __eq__(self, other):
+        if isinstance(other, RecipeHead):
+            return (self.title == other.title and 
+                    self.sections == other.sections)
+        return False
+
 class SectionNode():
     def __init__(self, section_type, content_nodes=[]):
         self.section_type = section_type
         self.content = content_nodes
+
+    def __repr__(self):
+        return f"SectionNode({self.section_type}, {self.content})"
+    
+    def __eq__(self, other):
+        if isinstance(other, SectionNode):
+            return (self.section_type == other.section_type and 
+                    self.content == other.content)
+        return False
 
 class ContentParentNode():
     def __init__(self, type, children):
@@ -28,7 +51,7 @@ class ContentParentNode():
     
     def __eq__(self, other):
         if isinstance(other, ContentParentNode):
-            return (self.type == other.type,
+            return (self.type == other.type and
                     self.children == other.children)
         return False
 
