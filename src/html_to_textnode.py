@@ -55,7 +55,6 @@ def html_to_textnode(html_file: "HTMLFile"):
                 section_node.content.append(ContentParentNode(ContentType.IMAGE, childnode))
                 section_nodes.append(section_node)
                 
-
     return section_nodes
 
 def title_to_textnode(html):
