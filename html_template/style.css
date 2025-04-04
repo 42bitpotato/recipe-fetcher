@@ -1,0 +1,69 @@
+@page {
+    size: A4;
+    margin: 2cm;
+  }
+  
+  html, body {
+    background-color: white;
+    color: black;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+  
+  h1 {
+    font-size: 24pt;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .recipe-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 1rem auto;
+    border-radius: 8px;
+  }
+  
+  .description {
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 2rem;
+  }
+  
+  .recipe-sections {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+  }
+  
+  .ingredients, .instructions {
+    flex: 1;
+  }
+  
+  .ingredients ul,
+  .instructions ol {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+  
+  .ingredients h2,
+  .instructions h2 {
+    font-size: 16pt;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Print-specific */
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  
+    .a4-container {
+      box-shadow: none;
+      page-break-after: always;
+    }
+  }
