@@ -39,8 +39,15 @@
     justify-content: space-between;
   }
   
-  .ingredients, .instructions {
-    flex: 1;
+  .ingredients {
+    flex: 0 0 30%;
+    padding-right: 1rem;
+    border-right: 2px solid #ccc; /* vertical line */
+  }
+  
+  .instructions {
+    flex: 0 0 70%;
+    padding-left: 1rem;
   }
   
   .ingredients ul,
