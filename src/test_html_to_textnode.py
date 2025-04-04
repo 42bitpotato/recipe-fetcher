@@ -2,7 +2,7 @@ import unittest
 import os
 from bs4 import BeautifulSoup
 from html_content import *
-from html_to_textnode import title_to_textnode, description_to_textnode, ingredients_to_textnode, instructions_to_textnode, image_to_textnode
+from html_to_textnode import title_to_textnode, description_to_textnode, ingredients_to_textnode, instructions_to_textnode, image_to_textnode, html_to_textnode
 from textnode import *
 
 html_path = os.path.join("test_env", "html_file.html")
@@ -42,9 +42,6 @@ class TestTextNode(unittest.TestCase):
         html_ingredients = html_ingredients_node.html
 
         ingredients = ingredients_to_textnode(html_ingredients)
-
-        print("---PRINT---")
-        print(ingredients)
         
         self.assertEqual(ingredients, [ContentChildNode('700 g röding, i portionsbitar (eller laxfilé)'), 
                                        ContentChildNode('2 tsk olivolja'), 
@@ -89,3 +86,9 @@ class TestTextNode(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             image_to_textnode(no_url)
+
+    def test_html_to_textnode(self):
+        textnodes = html_to_textnode(html_file)
+
+        print("---PRINT---")
+        print(textnodes)

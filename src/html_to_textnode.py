@@ -9,6 +9,7 @@ def html_to_textnode(html_file: "HTMLFile"):
         raise ValueError(f"Missing content: {html_file.content}")
     
     section_nodes = []
+    recipe_head = RecipeHead("", section_nodes)
 
     for content in html_file.content:
         if not isinstance(content.type, SectionType):
@@ -19,6 +20,8 @@ def html_to_textnode(html_file: "HTMLFile"):
                 section_node = SectionNode(SectionType.TITLE)
 
                 childnode = title_to_textnode(content.html)
+
+                recipe_head.title = childnode.value
 
                 section_node.content.append(ContentParentNode(ContentType.TEXT, childnode))
                 section_nodes.append(section_node)
@@ -55,7 +58,7 @@ def html_to_textnode(html_file: "HTMLFile"):
                 section_node.content.append(ContentParentNode(ContentType.IMAGE, childnode))
                 section_nodes.append(section_node)
                 
-    return section_nodes
+    return recipe_head
 
 def title_to_textnode(html):
     string = str(html.string)
