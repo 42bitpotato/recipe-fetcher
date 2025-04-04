@@ -21,7 +21,7 @@
   
   .recipe-image {
     display: block;
-    max-width: 100%;
+    max-width: 10cm;
     height: auto;
     margin: 0 auto 1rem auto;
     border-radius: 8px;
