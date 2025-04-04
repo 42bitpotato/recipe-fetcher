@@ -5,6 +5,7 @@ save_for_later.py
 test_file.*
 test_env_2.py
 .DS_store
+template_test.html
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
