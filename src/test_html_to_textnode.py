@@ -23,7 +23,7 @@ class TestTextNode(unittest.TestCase):
 
         title = title_to_textnode(html_title)
 
-        self.assertEqual(title, ContentChildNode("Lax med sandefjordsås och citronfänkål"))
+        self.assertEqual(title, ContentSection(SectionType.TITLE, ["Lax med sandefjordsås och citronfänkål"]))
 
     def test_description_to_textnode(self):
         # html_file = get_html(url) # HTMLFile(soup)
@@ -33,7 +33,7 @@ class TestTextNode(unittest.TestCase):
 
         description = description_to_textnode(html_description)
 
-        self.assertEqual(description, ContentChildNode("Ugnsbakad lax med underbar sås och frisk och krispig sallad. En middag som är lätt att laga där fisken sköter sig själv i ugnen, såsen kokar snabbt ihop med grädde, citron och smör och salladen blir krispig och god med färsk fänkål och citron."))
+        self.assertEqual(description, ContentSection(SectionType.DESCR, ["Ugnsbakad lax med underbar sås och frisk och krispig sallad. En middag som är lätt att laga där fisken sköter sig själv i ugnen, såsen kokar snabbt ihop med grädde, citron och smör och salladen blir krispig och god med färsk fänkål och citron."]))
 
     def test_ingredients_to_textnode(self):
         # html_file = get_html(url) # HTMLFile(soup)
@@ -43,17 +43,17 @@ class TestTextNode(unittest.TestCase):
 
         ingredients = ingredients_to_textnode(html_ingredients)
         
-        self.assertEqual(ingredients, [ContentChildNode('700 g röding, i portionsbitar (eller laxfilé)'), 
-                                       ContentChildNode('2 tsk olivolja'), 
-                                       ContentChildNode('1,5 dl grädde'), 
-                                       ContentChildNode('1,5 dl crème fraîche'), 
-                                       ContentChildNode('150 g smör, tärnat'), 
-                                       ContentChildNode('50 g regnbågsrom'), 
-                                       ContentChildNode('1 knippe färsk gräslök, finhackad'), 
-                                       ContentChildNode('1 citron'), ContentChildNode('2 fänkål'), ContentChildNode('0,5 gurka'), 
-                                       ContentChildNode('1 knippe färsk dill, finhackad (spara några vippor till garnering)'), 
-                                       ContentChildNode('900 g delikatesspotatis'), 
-                                       ContentChildNode('salt'), ContentChildNode('svartpeppar, nymalen')]
+        self.assertEqual(ingredients, ContentSection(SectionType.INGRE, ['700 g röding, i portionsbitar (eller laxfilé)', 
+                                       '2 tsk olivolja', 
+                                       '1,5 dl grädde', 
+                                       '1,5 dl crème fraîche', 
+                                       '150 g smör, tärnat', 
+                                       '50 g regnbågsrom', 
+                                       '1 knippe färsk gräslök, finhackad', 
+                                       '1 citron', '2 fänkål', '0,5 gurka', 
+                                       '1 knippe färsk dill, finhackad (spara några vippor till garnering)', 
+                                       '900 g delikatesspotatis', 
+                                       'salt', 'svartpeppar, nymalen'])
                                        )
         
     def test_instructions_to_textnode(self):
@@ -64,13 +64,13 @@ class TestTextNode(unittest.TestCase):
 
         instructions = instructions_to_textnode(html_instructions)
 
-        self.assertEqual(instructions, [ContentChildNode("Sätt ugnen på 150 grader varmluft."), 
-                                        ContentChildNode("Skiva fänkål så tunt du kan, gärna med mandolin. Riv över zest från citronen och pressa saften över, spara lite saft till såsen. På med finhackad dill och rör om. Låt stå."), 
-                                        ContentChildNode("Koka potatisen i lättsaltat vatten, håll varmt."), 
-                                        ContentChildNode("Salta och peppra fisken. Pensla med olivolja och tillaga i ugnen tills fiskens innertemperatur är 48-50 grader, ca 15-18 minuter."), 
-                                        ContentChildNode("Kärna ur gurkan och skär i små tärningar."), 
-                                        ContentChildNode("Koka upp grädde i en liten kastrull. Vispa ner crème fraiche och låt få ett uppkok. Ta av från värmen. Vispa ner lite smör i taget, smaka av med citron, salt och peppar. Tillsätt hälften av rommen samt hackad gräslök, rör om och smaka av med lite citron."), 
-                                        ContentChildNode("Servera den bakade fisken med sandefjordsås, citronfänkål, gurka och potatis.")]
+        self.assertEqual(instructions, ContentSection(SectionType.INSTR, ["Sätt ugnen på 150 grader varmluft.", 
+                                        "Skiva fänkål så tunt du kan, gärna med mandolin. Riv över zest från citronen och pressa saften över, spara lite saft till såsen. På med finhackad dill och rör om. Låt stå.", 
+                                        "Koka potatisen i lättsaltat vatten, håll varmt.", 
+                                        "Salta och peppra fisken. Pensla med olivolja och tillaga i ugnen tills fiskens innertemperatur är 48-50 grader, ca 15-18 minuter.", 
+                                        "Kärna ur gurkan och skär i små tärningar.", 
+                                        "Koka upp grädde i en liten kastrull. Vispa ner crème fraiche och låt få ett uppkok. Ta av från värmen. Vispa ner lite smör i taget, smaka av med citron, salt och peppar. Tillsätt hälften av rommen samt hackad gräslök, rör om och smaka av med lite citron.", 
+                                        "Servera den bakade fisken med sandefjordsås, citronfänkål, gurka och potatis."])
                                         )
         
     def test_image_to_textnode(self):
@@ -82,13 +82,15 @@ class TestTextNode(unittest.TestCase):
 
         image = image_to_textnode(html_image)
 
-        self.assertEqual(image, ContentChildNode("https://img.koket.se/wide-giant/lax-med-sandefjordsas-och-citronfankal.png.jpg"))
+        self.assertEqual(image, ContentSection(SectionType.IMAGE, ["https://img.koket.se/wide-giant/lax-med-sandefjordsas-och-citronfankal.png.jpg"]))
 
         with self.assertRaises(ValueError):
             image_to_textnode(no_url)
 
     def test_html_to_textnode(self):
-        textnodes = html_to_textnode(html_file)
+        recipe_head = html_to_textnode(html_file)
 
-        print("---PRINT---")
-        print(textnodes)
+        used_sections = {section.section_type for section in recipe_head.sections}
+        all_sections = set(SectionType)
+
+        self.assertTrue(all_sections.issubset(used_sections))
