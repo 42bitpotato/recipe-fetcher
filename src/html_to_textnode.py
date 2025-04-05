@@ -9,7 +9,7 @@ def html_to_textnode(html_file: "HTMLFile"):
         raise ValueError(f"Missing content: {html_file.content}")
     
     section_nodes = []
-    recipe_head = RecipeHead("", section_nodes)
+    recipe_head = RecipeHead(html_file.title, section_nodes)
 
     for content in html_file.content:
         if not isinstance(content.type, SectionType):
@@ -17,56 +17,29 @@ def html_to_textnode(html_file: "HTMLFile"):
         
         match content.type:
             case SectionType.TITLE:
-                section_node = SectionNode(SectionType.TITLE)
-
-                childnode = title_to_textnode(content.html)
-
-                recipe_head.title = childnode.value
-
-                section_node.content.append(ContentParentNode(ContentType.TEXT, childnode))
-                section_nodes.append(section_node)
+                section_nodes.append(title_to_textnode(content.html))
                 
             case SectionType.DESCR:
-                section_node = SectionNode(SectionType.DESCR)
-
-                childnode = description_to_textnode(content.html)
-
-                section_node.content.append(ContentParentNode(ContentType.TEXT, childnode))
-                section_nodes.append(section_node)
+                section_nodes.append(description_to_textnode(content.html))
                 
             case SectionType.INGRE:
-                section_node = SectionNode(SectionType.INGRE)
-
-                childnode = ingredients_to_textnode(content.html)
-
-                section_node.content.append(ContentParentNode(ContentType.UOLIST, childnode))
-                section_nodes.append(section_node)
+                section_nodes.append(ingredients_to_textnode(content.html))
                 
             case SectionType.INSTR:
-                section_node = SectionNode(SectionType.INSTR)
-
-                childnode = instructions_to_textnode(content.html)
-
-                section_node.content.append(ContentParentNode(ContentType.OLIST, childnode))
-                section_nodes.append(section_node)
+                section_nodes.append(instructions_to_textnode(content.html))
                 
             case SectionType.IMAGE:
-                section_node = SectionNode(SectionType.IMAGE)
-
-                childnode = image_to_textnode(content.html)
-
-                section_node.content.append(ContentParentNode(ContentType.IMAGE, childnode))
-                section_nodes.append(section_node)
+                section_nodes.append(image_to_textnode(content.html))
                 
     return recipe_head
 
 def title_to_textnode(html):
     string = str(html.string)
-    return ContentChildNode(string.strip())
+    return ContentSection(SectionType.TITLE, [string.strip()])
 
 def description_to_textnode(html):
     string = str(html.p.string)
-    return ContentChildNode(string.strip())
+    return ContentSection(SectionType.DESCR, [string.strip()])
 
 def ingredients_to_textnode(html):
     list_of_ingredients = []
@@ -80,12 +53,12 @@ def ingredients_to_textnode(html):
             if line.isspace() or line == "":
                 continue
             else:
-                list_of_ingredients.append(ContentChildNode(line.strip()))
+                list_of_ingredients.append(line.strip())
 
     if len(list_of_ingredients) == 0: # Raise an error if no valid content was extracted
         raise ValueError(f"Failed to extract text from HTML. list_of_ingredients: {list_of_ingredients}")
 
-    return list_of_ingredients
+    return ContentSection(SectionType.INGRE, list_of_ingredients)
 
 def instructions_to_textnode(html):
     list_of_instructions = []
@@ -99,12 +72,12 @@ def instructions_to_textnode(html):
             if line.isspace() or line == "":
                 continue
             else:
-                list_of_instructions.append(ContentChildNode(line.strip()))
+                list_of_instructions.append(line.strip())
 
     if len(list_of_instructions) == 0: # Raise an error if no valid content was extracted
         raise ValueError(f"Failed to extract text from HTML. list_of_instructions: {list_of_instructions}")
     
-    return list_of_instructions
+    return ContentSection(SectionType.INSTR, list_of_instructions)
 
 def image_to_textnode(html):
     split_html = str(html.get("srcset")).split(",")
@@ -112,6 +85,6 @@ def image_to_textnode(html):
         if image_url.endswith("816w"):
             for url in image_url.split():
                 if url.startswith("http"):
-                    return ContentChildNode(url)
+                    return ContentSection(SectionType.IMAGE, [url])
                 continue
     raise ValueError(f"Missing url: {html}")

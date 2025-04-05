@@ -27,7 +27,7 @@ class HTMLFile():
     def __init__(self, html, url):
         self._html = html
         self. _url = url
-        self._title = str(self._html.find("h1", class_=re.compile("title")).string)
+        self.title = str(self._html.find("h1", class_=re.compile("title")).string)
         self.content = []
         
         self.extract_title()
@@ -37,13 +37,13 @@ class HTMLFile():
         self.extract_image()
 
     def __repr__(self):
-        return f"HTMLFile({self._title}: {self._url}, {self.content})"
+        return f"HTMLFile({self.title}: {self._url}, {self.content})"
     
     def __eq__(self, other):
         if isinstance(other, HTMLFile):
             return (self._html == other._html and
                     self._url == other._url and
-                    self._title == other._title and
+                    self.title == other.title and
                     self.content == other.content
                     )
         return False
