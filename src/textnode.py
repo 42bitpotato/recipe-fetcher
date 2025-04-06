@@ -17,6 +17,7 @@ class RecipeHead():
     def __init__(self, title, sections=[]):
         self.title = title
         self.sections = sections
+        self.sections_dict = dict()
 
     def __repr__(self):
         return f"RecipeHead({self.title}, {self.sections})"

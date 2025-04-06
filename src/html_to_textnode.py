@@ -17,19 +17,29 @@ def html_to_textnode(html_file: "HTMLFile"):
         
         match content.type:
             case SectionType.TITLE:
-                section_nodes.append(title_to_textnode(content.html))
+                text = title_to_textnode(content.html)
+                section_nodes.append(text)
+                recipe_head.sections_dict[SectionType.TITLE] = text
                 
             case SectionType.DESCR:
-                section_nodes.append(description_to_textnode(content.html))
+                text = description_to_textnode(content.html)
+                section_nodes.append(text)
+                recipe_head.sections_dict[SectionType.DESCR] = text
                 
             case SectionType.INGRE:
-                section_nodes.append(ingredients_to_textnode(content.html))
+                text = ingredients_to_textnode(content.html)
+                section_nodes.append(text)
+                recipe_head.sections_dict[SectionType.INGRE] = text
                 
             case SectionType.INSTR:
-                section_nodes.append(instructions_to_textnode(content.html))
+                text = instructions_to_textnode(content.html)
+                section_nodes.append(text)
+                recipe_head.sections_dict[SectionType.INSTR] = text
                 
             case SectionType.IMAGE:
-                section_nodes.append(image_to_textnode(content.html))
+                text = image_to_textnode(content.html)
+                section_nodes.append(text)
+                recipe_head.sections_dict[SectionType.IMAGE] = text
                 
     return recipe_head
 
