@@ -2,10 +2,10 @@ import os
 import shutil
 from textnode import RecipeHead, SectionType
 
-def text_to_html(recipe_text: "RecipeHead"):
+def text_to_html(recipe_obj: "RecipeHead"):
     html_template = copy_template()
 
-    sections = recipe_text.sections_dict
+    sections = recipe_obj.sections
 
     html_template_split = html_template.splitlines()
     
@@ -52,7 +52,7 @@ def text_to_html(recipe_text: "RecipeHead"):
             line = html_template_split[ing_line_num]
 
             spaces = " " * line.count(" ") # Count indentation spaces
-            list_items = sections[SectionType.INGRE].value.copy()
+            list_items = sections[SectionType.INGRE].copy()
 
             add_list_item(html_template_split, ing_line_num, spaces, list_items)
             continue
@@ -63,10 +63,12 @@ def text_to_html(recipe_text: "RecipeHead"):
             line = html_template_split[ing_line_num]
 
             spaces = " " * line.count(" ") # Count indentation spaces
-            list_items = sections[SectionType.INSTR].value.copy()
+            list_items = sections[SectionType.INSTR].copy()
 
             add_list_item(html_template_split, ing_line_num, spaces, list_items)
             continue
+
+    return "\n".join(html_template_split)
 
 
 def copy_template(template_dir=None):
