@@ -27,24 +27,47 @@ def text_to_html(recipe_text: "RecipeHead"):
                     new_line = line[:c+1] + sections[SectionType.TITLE] + line[c+1:]
                     html_template_split[line_num] = new_line
                     break
+            continue
         
         # Description
         if strip_line.startswith('<p class="description">'):
             line = html_template_split[line_num+1]
             new_line = line + sections[SectionType.DESCR]
             html_template_split[line_num+1] = new_line
-            break
+            continue
+
+        # Image
+        if strip_line.startswith("<img"):
+            line = html_template_split[line_num]
+            for c in range(len(line)):
+                if line[c] == '"':
+                    new_line = line[:c+1] + sections[SectionType.IMAGE] + line[c+1:]
+                    html_template_split[line_num] = new_line
+                    break
+            continue
 
         # Ingredients
         if strip_line.startswith("<h2>Ingredients</h2>"):
             ing_line_num = line_num+2
             line = html_template_split[ing_line_num]
-            
-            for l in range(len(html_template_split[ing_line_num+1])):
-                if line[c] == ">":
-                    new_line = line[:c+1] + sections[SectionType.TITLE] + line[c+1:]
-                    html_template_split[line_num] = new_line
-                    break
+
+            spaces = " " * line.count(" ") # Count indentation spaces
+            list_items = sections[SectionType.INGRE].value.copy()
+
+            add_list_item(html_template_split, ing_line_num, spaces, list_items)
+            continue
+
+        # Instructions
+        if strip_line.startswith("<h2>Instructions</h2>"):
+            ing_line_num = line_num+2
+            line = html_template_split[ing_line_num]
+
+            spaces = " " * line.count(" ") # Count indentation spaces
+            list_items = sections[SectionType.INSTR].value.copy()
+
+            add_list_item(html_template_split, ing_line_num, spaces, list_items)
+            continue
+
 
 def copy_template(template_dir=None):
     template_dir = "html_template" if template_dir == None else template_dir
@@ -59,10 +82,12 @@ def copy_template(template_dir=None):
     
     return html_template
 
-def add_text_to_line(line, start, end, enum: "SectionType"):
-    new_line = line[start] + sections[SectionType.TITLE] + line[end]
-    return new_line
-    # If multiple lines, split list and add bottom to new list before extending with new lines, then add old lines again
+def add_list_item(html_template_split, line_nr, spaces, list_items):
+    if len(list_items) == 0:
+        return
+    line = spaces + "<li>" + list_items.pop() + "</li>"
+    html_template_split[line_nr:line_nr] = line
+    return add_list_item(html_template_split, line_nr + 1, spaces, list_items)
 
 def remove_name_spaces(file_name):
     new_name = file_name.replace(" ", "_")
