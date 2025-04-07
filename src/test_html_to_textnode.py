@@ -13,6 +13,7 @@ soup = BeautifulSoup(file, "html.parser")
 url = "https://www.koket.se/lax-med-sandefjordsas-och-citronfankal"
 
 html_file = get_html(url)
+recipe_head = html_to_textnode(html_file)
 
 class TestTextNode(unittest.TestCase):
     def test_title_to_textnode(self):
@@ -87,7 +88,7 @@ class TestTextNode(unittest.TestCase):
             image_to_textnode(no_url)
 
     def test_html_to_textnode(self):
-        recipe_head = html_to_textnode(html_file)
+        
 
         used_sections = {section for section in recipe_head.sections.keys()}
         all_sections = set(SectionType)
