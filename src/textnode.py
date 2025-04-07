@@ -14,10 +14,9 @@ class ContentType(Enum):
     IMAGE = "image"
 
 class RecipeHead():
-    def __init__(self, title, sections=[]):
+    def __init__(self, title, sections=dict()):
         self.title = title
         self.sections = sections
-        self.sections_dict = dict()
 
     def __repr__(self):
         return f"RecipeHead({self.title}, {self.sections})"
@@ -27,7 +26,9 @@ class RecipeHead():
             return (self.title == other.title and 
                     self.sections == other.sections)
         return False
-    
+
+# Not in use
+
 class ContentSection():
     def __init__(self, section_type, value=[]):
         self.section_type = section_type
