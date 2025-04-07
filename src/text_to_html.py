@@ -1,5 +1,4 @@
-import os
-import shutil
+from file_handling import copy_template
 from textnode import RecipeHead, SectionType
 
 def text_to_html(recipe_obj: "RecipeHead"):
@@ -70,28 +69,9 @@ def text_to_html(recipe_obj: "RecipeHead"):
 
     return "\n".join(html_template_split)
 
-
-def copy_template(template_dir=None):
-    template_dir = "html_template" if template_dir == None else template_dir
-
-    html_template_path = os.path.join(template_dir, "template.html")
-
-    if os.path.exists(html_template_path):
-        with open(html_template_path, "r") as template_file:
-            html_template = template_file.read()
-    else:
-        raise ValueError(f'HTML template file not found: "{html_template_path}"')
-    
-    return html_template
-
 def add_list_item(html_template_split, line_nr, spaces, list_items):
     if len(list_items) == 0:
         return
     line = spaces + "<li>" + list_items.pop() + "</li>"
     html_template_split[line_nr:line_nr] = line
     return add_list_item(html_template_split, line_nr + 1, spaces, list_items)
-
-def remove_name_spaces(file_name):
-    new_name = file_name.replace(" ", "_")
-    new_name.join(".html")
-    return new_name
