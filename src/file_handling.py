@@ -31,3 +31,8 @@ def copy_css(css_dir=None):
         raise ValueError(f'CSS template file not found: "{css_template_path}"')
     
     return css_template
+
+def css_file_path(css_dir=None):
+    css_dir = "html_template" if css_dir == None else css_dir
+    css_file_path = os.path.join(css_dir, "style.css")
+    return css_file_path
