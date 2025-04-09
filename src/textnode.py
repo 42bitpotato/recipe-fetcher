@@ -16,6 +16,7 @@ class ContentType(Enum):
 class RecipeHead():
     def __init__(self, title, sections=dict()):
         self.title = title
+        self.pdf_name = title.replace(" ", "_")
         self.sections = sections
 
     def __repr__(self):
