@@ -34,19 +34,27 @@
   }
   
   .recipe-sections {
-    display: flex;
-    gap: 2rem;
-    justify-content: space-between;
+    display: table; /* use table layout for better page-break control */
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 2rem;
+    page-break-inside: avoid; /* try to keep the whole section on the same page */
+  }
+  
+  .ingredients,
+  .instructions {
+    display: table-cell;
+    vertical-align: top;
   }
   
   .ingredients {
-    flex: 0 0 30%;
+    width: 30%;
     padding-right: 1rem;
-    border-right: 2px solid #ccc; /* vertical line */
+    border-right: 2px solid #ccc;
   }
   
   .instructions {
-    flex: 0 0 70%;
+    width: 70%;
     padding-left: 1rem;
   }
   

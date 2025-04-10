@@ -27,6 +27,10 @@ class RecipeHead():
             return (self.title == other.title and 
                     self.sections == other.sections)
         return False
+    
+    def to_html(self):
+        from text_to_html import text_to_html
+        return text_to_html(self)
 
 # Not in use
 

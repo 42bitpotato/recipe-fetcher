@@ -1,25 +1,25 @@
 import os
 import shutil
-from html_content import *
 from bs4 import BeautifulSoup
+
+from html_content import get_html
+from html_to_textnode import html_to_textnode
+from text_to_html import text_to_html
+from render_pdf import render_pdf
+
+
 
 
 def main():
 
+    # Make list of url's
     url = "https://www.koket.se/lax-med-sandefjordsas-och-citronfankal"
 
-    if os.listdir(path="test_env") != []:
-        shutil.rmtree("test_env")
-        os.mkdir("test_env")
+    # Automate these two to save
+    html = get_html(url) 
+    textnode = html_to_textnode(html)
 
-    dest_file_name = os.path.join("test_env", "html_file.html")
-    html_data = get_html(url)
-    html_raw = html_data._html
-
-    with open(dest_file_name, "w") as html_file:
-        html_file.write(html_raw.prettify())
-
-    print(html_file)
+    render_pdf(textnode)
 
 if __name__ == "__main__":
     main()
